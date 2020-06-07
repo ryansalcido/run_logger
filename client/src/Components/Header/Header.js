@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,6 +6,9 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
+import StravaLoginButton from "../common/StravaLoginButton";
+import { StravaContext } from "../../Context/StravaContext";
+import AuthenticatedHeader from "./AuthenticatedHeader";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -17,15 +20,25 @@ const useStyles = makeStyles((theme) => ({
 	headerButton: {
 		color: "white",
 		border: "1px solid white",
-		margin: `0 ${theme.spacing(1)}px`,
+		marginRight: theme.spacing(1),
 		"&:hover": {
 			textDecoration: "none"
 		}
+	},
+	stravaConnectButton: {
+		padding: 0,
+		borderRadius: 4
+	},
+	gridItemButtons: {
+		display: "flex",
+		alignItems: "center"
 	}
 }));
 
 const Header = () => {
 	const classes = useStyles();
+
+	const { isAuthenticated } = useContext(StravaContext);
 
 	return (
 		<AppBar color="primary" position="static" className={classes.appBar}>
@@ -34,16 +47,20 @@ const Header = () => {
 					<Grid item>
 						<Typography variant="h5">RUN LOGGER</Typography>
 					</Grid>
-					<Grid item>
-						<Button className={classes.headerButton} variant="outlined"
-							component={Link} to={"/"} >
-							home
-						</Button>
-						<Button className={classes.headerButton} variant="outlined"
-							component={Link} to={"/login"} >
-							log in
-						</Button>
-					</Grid>					
+					<Grid item className={classes.gridItemButtons}>
+						{isAuthenticated 
+							? <AuthenticatedHeader />
+							: (
+								<Fragment>
+									<Button className={classes.headerButton} variant="outlined"
+										component={Link} to={"/"} >
+										home
+									</Button>
+									<StravaLoginButton height="40"/>
+								</Fragment>
+							)
+						}
+					</Grid>				
 				</Grid>
 			</Toolbar>
 		</AppBar>

@@ -7,9 +7,9 @@ const stravaRouter = require("./routes/strava");
 const port = 8443;
 
 app.use(session({
-  secret: process.env.EXPRESS_SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
+	secret: process.env.EXPRESS_SESSION_SECRET,
+	resave: false,
+	saveUninitialized: true
 }));
 
 app.disable("x-powered-by");

@@ -1,0 +1,64 @@
+import React, { Fragment, createContext, useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import axios from "axios";
+import Grid from "@material-ui/core/Grid";
+import Loading from "../Components/common/Loading";
+
+const useStyles = makeStyles(() => ({
+	loadingApp: {
+		minHeight: "inherit",
+		backgroundColor: "#303030"
+	},
+	loadingRunnerIcon: {
+		fontSize: 100
+	}
+}));
+
+export const StravaContext = createContext();
+
+const StravaProvider = ({ children }) => {
+	const classes = useStyles();
+	const [ isLoaded, setIsLoaded ] = useState(false);
+	const [ profile, setProfile ] = useState(null);
+	const [ isAuthenticated, setIsAuthenticated ] = useState(false);
+
+	useEffect(() => {
+		let source = axios.CancelToken.source();
+		axios.get("/strava/athlete", {cancelToken: source.token}).then(res => {
+			const { profile } = res.data;
+			setIsAuthenticated(true);
+			setProfile(profile);
+			setIsLoaded(true);
+		}).catch(() => {
+			setIsAuthenticated(false);
+			setProfile(null);
+			setIsLoaded(true);
+		});
+
+		return () => source.cancel();
+	}, []);
+
+	return (
+		<Fragment>
+			{isLoaded
+				? (
+					<StravaContext.Provider value={{profile, setProfile, isAuthenticated}}>
+						{ children }
+					</StravaContext.Provider>
+				)
+				:	(
+					<Grid className={classes.loadingApp} container alignItems="center" justify="center">
+						<Loading className={classes.loadingRunnerIcon} />
+					</Grid>
+				)
+			}
+		</Fragment>
+	);
+};
+
+StravaProvider.propTypes = {
+	children: PropTypes.object.isRequired
+};
+
+export default StravaProvider;
