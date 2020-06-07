@@ -1,29 +1,33 @@
-import React from 'react';
+import React from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import theme from "./theme";
-import Header from "./Components/Header";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer";
 import Home from "./Components/Home";
-import Login from "./Components/Login";
+import Dashboard from "./Components/Dashboard";
+import AuthenticatedRoute from "./hoc/AuthenticatedRoute";
+import UnauthenticatedRoute from "./hoc/UnauthenticatedRoute";
 
 function App() {
 	const themeConfig = createMuiTheme(theme);
 
-  return (
-    <ThemeProvider theme={themeConfig}>
+	return (
+		<ThemeProvider theme={themeConfig}>
 			<CssBaseline />
 			<Router>
 				<Header />
-				<div>
+				<div style={{minHeight: "calc(100vh - 55px)", paddingBottom: 40}}>
 					<Switch>
-						<Route exact path="/" component={Home} />
-						<Route exact path="/login" component={Login} />
+						<UnauthenticatedRoute exact path="/" component={Home} />
+						<AuthenticatedRoute exact path="/dashboard" component={Dashboard} />
 					</Switch>
 				</div>
+				<Footer />
 			</Router>
 		</ThemeProvider>
-  );
+	);
 }
 
 export default App;

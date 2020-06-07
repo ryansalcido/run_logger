@@ -1,0 +1,125 @@
+import React, { useState, useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { StravaContext } from "../../Context/StravaContext";
+import PropTypes from "prop-types";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Run from "../../assets/images/Run.png";
+import CommentOutlinedIcon from "@material-ui/icons/CommentOutlined";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import ActivityDetailsPopup from "./ActivityDetailsPopup";
+import { convertMetersToMiles, formatUTC, calculateMovingTime, 
+	calculateAveragePace, createRunStatColumn} from "./helpers";
+
+const useStyles = makeStyles((theme) => ({
+	activityRoot: {
+		padding: `${theme.spacing(1)}px 8px`
+	},
+	activityCard: {
+		backgroundColor: "white",
+		color: "black",
+		padding: theme.spacing(1)
+	},
+	profileAvatar: {
+		borderRadius: "50%"
+	},
+	activityImageItem: {
+		width: 60
+	},
+	bold: {
+		fontWeight: "bold"
+	},
+	kudosCommentButton: {
+		color: "black"
+	},
+	divider: {
+		width: "100%",
+		backgroundColor: "lightgray"
+	}
+}));
+
+const Activity = ({ activity }) => {
+	const classes = useStyles();
+	const { profile } = useContext(StravaContext);
+	const [ selectedActivity, setSelectedActivity ] = useState(null);
+
+	const handleSelectedActivity = (activity, type) => {
+		setSelectedActivity(
+			{type, id: activity.id, name: activity.name, avatar: profile.profile_medium}
+		);
+	};
+
+	return (
+		<div className={classes.activityRoot}>
+			{selectedActivity &&
+				<ActivityDetailsPopup activity={selectedActivity} setSelectedActivity={setSelectedActivity} />
+			}
+			<Grid container>
+				<Grid item xs={12} sm={11} md={5}>
+					<Paper elevation={3} className={classes.activityCard}>
+						<Grid container item>
+							<Grid item xs={2} sm={2} md={3} lg={2}>
+								<img src={profile.profile_medium} alt="Profile Avatar" 
+									className={classes.profileAvatar} height="45" width="45" />
+							</Grid>
+							<Grid container item xs={10} sm={10} md={9} lg={10} direction="column">
+								<Grid item>
+									<Typography variant="body2" className={classes.bold}>{`${profile.firstname} ${profile.lastname}`}</Typography>
+								</Grid>
+								<Grid item>
+									<Typography variant="caption">
+										{formatUTC(activity.start_date_local, "MMMM Do, YYYY")} at {formatUTC(activity.start_date_local, "h:mm A")}
+									</Typography>
+								</Grid>
+							</Grid>
+							<Grid item xs={2} sm={2} md={3} lg={2}>
+								{activity.type === "Run" && <img src={Run} alt="Running shoe" width="35" height="25" />}
+							</Grid>
+							<Grid container item direction="column" xs={10} sm={10} md={9} lg={10}>
+								<Grid item>
+									<Typography variant="body1" className={classes.bold}>{activity.name}</Typography>
+								</Grid>
+								<Grid container item>
+									{createRunStatColumn("Distance", activity.distance, convertMetersToMiles)}
+									{createRunStatColumn("Time", activity.moving_time, calculateMovingTime)}
+									<Grid item xs={4}>
+										<Grid item>
+											<Typography align="center">Avg. Pace</Typography>
+										</Grid>
+										<Grid item>
+											<Typography align="center">{calculateAveragePace(activity.moving_time, activity.distance)}</Typography>
+										</Grid>
+									</Grid>
+								</Grid>								
+							</Grid>
+							<Grid container item justify="space-between">
+								<Divider className={classes.divider} />
+								<Grid item xs={6}>
+									<Button className={classes.kudosCommentButton} startIcon={<ThumbUpOutlinedIcon />}
+										onClick={() => handleSelectedActivity(activity, "kudos")} >
+										{activity.kudos_count}
+									</Button>
+								</Grid>
+								<Grid container item xs={6} alignItems="center" justify="flex-end">
+									<Button className={classes.kudosCommentButton} startIcon={<CommentOutlinedIcon />}
+										onClick={() => handleSelectedActivity(activity, "comments")}>
+										{activity.comment_count}
+									</Button>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Paper>
+				</Grid>
+			</Grid>
+		</div>
+	);
+};
+
+Activity.propTypes = {
+	activity: PropTypes.object.isRequired
+};
+
+export default Activity;

@@ -1,10 +1,10 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import StravaLoginButton from "./common/StravaLoginButton";
 
 const Home = () => {
 
 	return (
-		<Typography variant="h4" color="secondary" align="center">Run Logger</Typography>
+		<StravaLoginButton height="48" />	
 	);
 };
 
