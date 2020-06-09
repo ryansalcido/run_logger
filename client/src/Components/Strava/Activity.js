@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, forwardRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { StravaContext } from "../../Context/StravaContext";
 import PropTypes from "prop-types";
@@ -11,23 +11,28 @@ import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import ActivityDetailsPopup from "./ActivityDetailsPopup";
+import GoogleStaticMap from "./GoogleStaticMap";
 import { convertMetersToMiles, formatUTC, calculateMovingTime, 
 	calculateAveragePace, createRunStatColumn} from "./helpers";
 
 const useStyles = makeStyles((theme) => ({
 	activityRoot: {
-		padding: `${theme.spacing(1)}px 8px`
+		padding: theme.spacing(1)
 	},
 	activityCard: {
 		backgroundColor: "white",
 		color: "black",
-		padding: theme.spacing(1)
+		padding: theme.spacing(2)
 	},
 	profileAvatar: {
 		borderRadius: "50%"
 	},
 	activityImageItem: {
 		width: 60
+	},
+	googleMapsItem: {
+		height: "100%",
+		width: "100%"
 	},
 	bold: {
 		fontWeight: "bold"
@@ -41,19 +46,20 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const Activity = ({ activity }) => {
+const Activity = forwardRef(({ activity }, ref) => {
 	const classes = useStyles();
 	const { profile } = useContext(StravaContext);
 	const [ selectedActivity, setSelectedActivity ] = useState(null);
 
 	const handleSelectedActivity = (activity, type) => {
+		const { id, name, kudos_count, comment_count } = activity;
 		setSelectedActivity(
-			{type, id: activity.id, name: activity.name, avatar: profile.profile_medium}
+			{type, id, name, kudos_count, comment_count, avatar: profile.profile_medium}
 		);
 	};
 
 	return (
-		<div className={classes.activityRoot}>
+		<div ref={ref} className={classes.activityRoot}>
 			{selectedActivity &&
 				<ActivityDetailsPopup activity={selectedActivity} setSelectedActivity={setSelectedActivity} />
 			}
@@ -95,6 +101,9 @@ const Activity = ({ activity }) => {
 									</Grid>
 								</Grid>								
 							</Grid>
+							<Grid item className={classes.googleMapsItem}>
+								<GoogleStaticMap polyline={activity.map.summary_polyline} />
+							</Grid>
 							<Grid container item justify="space-between">
 								<Divider className={classes.divider} />
 								<Grid item xs={6}>
@@ -116,7 +125,9 @@ const Activity = ({ activity }) => {
 			</Grid>
 		</div>
 	);
-};
+});
+
+Activity.displayName = "Activity";
 
 Activity.propTypes = {
 	activity: PropTypes.object.isRequired
