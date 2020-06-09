@@ -23,6 +23,11 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
+const getCommentKudosCountByType = (activity) => {
+	if(activity.type === "kudos") return activity.kudos_count;
+	if(activity.type === "comments") return activity.comment_count;
+};
+
 const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 	const classes = useStyles();
 
@@ -32,8 +37,8 @@ const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 	useEffect(() => {
 		let source = axios.CancelToken.source();
 		axios.get(`/strava/activities/${activity.id}/${activity.type}`, {cancelToken: source.token}).then(res => {
-			const { details } = res.data;
-			setData(details);
+			const { result } = res.data;
+			setData(result);
 			setIsDetailsPopupOpen(true);
 		}).catch(error => {
 			if(!axios.isCancel(error)) {
@@ -65,7 +70,7 @@ const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 								<Typography variant="h6">{activity.name}</Typography>
 							</Grid>
 							<Grid item xs={1} className={classes.badgeItem}>
-								<Badge badgeContent={data.length} color="primary">
+								<Badge badgeContent={getCommentKudosCountByType(activity)} color="primary" showZero>
 									{activity.type === "kudos" && <ThumbUpOutlinedIcon />}
 									{activity.type === "comments" && <CommentOutlinedIcon />}
 								</Badge>
@@ -91,6 +96,8 @@ ActivityDetailsPopup.propTypes = {
 		type: PropTypes.string.isRequired,
 		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
+		kudos_count: PropTypes.number.isRequired,
+		comment_count: PropTypes.number.isRequired,
 		avatar: PropTypes.string
 	})
 };

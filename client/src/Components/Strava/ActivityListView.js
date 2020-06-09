@@ -1,31 +1,37 @@
-import React, { Fragment, useState, useEffect } from "react";
-import axios from "axios";
+import React, { Fragment, useState, useRef, useCallback } from "react";
 import Activity from "./Activity";
+import Typography from "@material-ui/core/Typography";
+import SkeletonLoading from "../common/SkeletonLoading";
+import { useStravaAxios } from "./useStravaAxios";
 
 const ActivityListView = () => {
-	const [ activities, setActivities ] = useState(null);
+	const [ currentPage, setCurrentPage ] = useState(1);
+	const { data: activities, isLoading } = useStravaAxios(`/strava/athlete/activities?page=${currentPage}`);
 
-	useEffect(() => {
-		let source = axios.CancelToken.source();
-
-		axios.get("/strava/athlete/activities", {cancelToken: source.token}).then(res => {
-			const { activities } = res.data;
-			setActivities(activities);
-		}).catch(error => {
-			if(!axios.isCancel(error)) {
-				setActivities(null);
+	const observer = useRef();
+	const lastActivityRef = useCallback(node => {
+		if(isLoading) return;
+		if(observer.current) observer.current.disconnect();
+		observer.current = new IntersectionObserver(entries => {
+			if(entries[0].isIntersecting) {
+				setCurrentPage(currentPage + 1);
 			}
 		});
-		return () => source.cancel();
-	}, []);
+		if (observer.current && node) observer.current.observe(node);
+	}, [isLoading, currentPage]);
 
 	return (
 		<Fragment>
-			{activities && activities.map(activity => {
-				return (
-					<Activity key={activity.id} activity={activity} />
-				);
-			})}
+			<Typography variant="h4" style={{padding: 8}}>Your Activities</Typography>
+			{activities && 
+				activities.map((activity, idx) => {
+					return (
+						<Activity key={activity.id} activity={activity} 
+							ref={activities.length === idx + 1 ? lastActivityRef : null}/>
+					);
+				})
+			}
+			{isLoading && <SkeletonLoading height={175} />}
 		</Fragment>
 	);
 };

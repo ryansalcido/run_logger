@@ -11,8 +11,9 @@ athleteRouter.get("/", isUserAuthenticated, (req, res) => {
 });
 
 athleteRouter.get("/activities", isUserAuthenticated, (req, res) => {
-	stravaAxios(req.user, "/activities").then(response => {
-		res.status(200).json({activities: response});
+	const { page } = req.query;
+	stravaAxios(req.user, `/activities?page=${page}&per_page=50`).then(response => {
+		res.status(200).json({result: response});
 	}).catch(error => {
 		res.status(400).json(error);
 	});

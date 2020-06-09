@@ -37,7 +37,7 @@ const Loading = (props) => {
 
 	return (
 		<div className={classes.loadingContainer}>
-			{[0, 1, 2].map((idx) => {
+			{[0, 1, 2].map(idx => {
 				return <DirectionsRunIcon key={idx} className={className} />;
 			})}
 		</div>
