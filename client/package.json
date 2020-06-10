@@ -7,6 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "post-build": "rm -rf ../server/build && cp -R build/ ../server/",
     "lint": "./node_modules/.bin/eslint . --fix"
   },
   "dependencies": {
@@ -27,15 +28,20 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome > 70",
+      "firefox > 52",
+      "last 1 safari version",
+      "ie 11",
+      "edge > 16"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "chrome > 70",
+      "firefox > 52",
+      "last 1 safari version",
+      "ie 11",
+      "edge > 16"
     ]
   },
-  "proxy": "http://localhost:8443"
+  "proxy": "http://localhost:8443",
+  "homepage": "/run-logger"
 }

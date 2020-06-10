@@ -15,8 +15,12 @@ const StravaLoginButton = (props) => {
 	const { height } = props;
 	const classes = useStyles();
 
+	const baseUrl = process.env.NODE_ENV === "production"
+		? process.env.REACT_APP_NODE_BASE_URL_PROD
+		: "http://localhost:8443/run-logger/";
+
 	return (
-		<IconButton className={classes.stravaConnectButton} href="http://localhost:8443/strava/auth/login">
+		<IconButton className={classes.stravaConnectButton} href={`${baseUrl}auth/login`}>
 			<img src={ConnectWithStrava} height={height} alt="Connect with Strava" />
 		</IconButton>
 	);

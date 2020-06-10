@@ -1,9 +1,9 @@
 import React, { Fragment, createContext, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Loading from "../Components/common/Loading";
+import axiosInstance from "../utils/axiosInstance";
 
 const useStyles = makeStyles(() => ({
 	loadingApp: {
@@ -24,8 +24,8 @@ const StravaProvider = ({ children }) => {
 	const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
 	useEffect(() => {
-		let source = axios.CancelToken.source();
-		axios.get("/strava/athlete", {cancelToken: source.token}).then(res => {
+		let source = axiosInstance.CancelToken.source();
+		axiosInstance.get("athlete", {cancelToken: source.token}).then(res => {
 			const { profile } = res.data;
 			setIsAuthenticated(true);
 			setProfile(profile);

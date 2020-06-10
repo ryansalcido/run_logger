@@ -13,7 +13,8 @@ passport.deserializeUser((user, done) => {
 passport.use(new StravaStrategy({
 	clientID: process.env.STRAVA_CLIENT_ID,
 	clientSecret: process.env.STRAVA_CLIENT_SECRET,
-	callbackURL: "/strava/auth/callback"
+	callbackURL: process.env.NODE_ENV === "production" 
+		? process.env.STRAVA_REDIRECT_URI_PROD : process.env.STRAVA_REDIRECT_URI_DEV
 }, (accessToken, refreshToken, profile, done)  => {
 	return done(null, {profile, accessToken, refreshToken});
 }));
