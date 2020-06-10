@@ -6,10 +6,7 @@ import PropTypes from "prop-types";
 const useStyles = makeStyles(() => ({
 	loadingContainer: {
 		"& svg": {
-			animationName: "$blink",
-			animationDuration: "1.5s",
-			animationIterationCount: "infinite",
-			animationFillMode: "both",
+			animation: "$blink 1.5s both infinite",
 			"&:nth-child(2)": {
 				animationDelay: "0.5s"
 			},

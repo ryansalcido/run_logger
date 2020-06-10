@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 		padding: 8,
 		"& li": {
 			"&:not(:last-child)": {
-				borderBottom: "1px solid #f0f0f52e"
+				borderBottom: "1px solid rgba(240,240,245,0.18)"
 			}
 		}
 	},
