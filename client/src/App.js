@@ -16,7 +16,7 @@ function App() {
 	return (
 		<ThemeProvider theme={themeConfig}>
 			<CssBaseline />
-			<Router>
+			<Router basename={process.env.PUBLIC_URL}>
 				<Header />
 				<div style={{minHeight: "calc(100vh - 55px)", paddingBottom: 40}}>
 					<Switch>

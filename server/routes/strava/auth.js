@@ -2,6 +2,10 @@ require("../../config/passport");
 const authRouter = require("express").Router();
 const passport = require("passport");
 
+const CLIENT_REDIRECT_URL = process.env.NODE_ENV === "production"
+	? process.env.CLIENT_DASHBOARD_URL_PROD
+	: process.env.CLIENT_DASHBOARD_URL_DEV;
+
 authRouter.get("/login",
 	passport.authenticate("strava", {scope: "profile:read_all,activity:read_all"}), () => {
 	// The request will be redirected to Strava for authentication, so this
@@ -11,11 +15,11 @@ authRouter.get("/login",
 
 authRouter.get("/callback", (req, res, next) => {
 	passport.authenticate("strava", (err, user) => {
-		if(err) return res.redirect("http://localhost:3000");
-		if(!user) return res.redirect("http://localhost:3000");
+		if(err) return res.redirect(CLIENT_REDIRECT_URL);
+		if(!user) return res.redirect(CLIENT_REDIRECT_URL);
 		req.login(user, (error) => {
-			if(error) return res.redirect("http://localhost:3000");
-			return res.redirect("http://localhost:3000/dashboard");
+			if(error) return res.redirect(CLIENT_REDIRECT_URL);
+			return res.redirect(CLIENT_REDIRECT_URL);
 		});
 	})(req, res, next);
 });

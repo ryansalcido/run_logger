@@ -6,7 +6,7 @@ import { useStravaAxios } from "./useStravaAxios";
 
 const ActivityListView = () => {
 	const [ currentPage, setCurrentPage ] = useState(1);
-	const { data: activities, isLoading } = useStravaAxios(`/strava/athlete/activities?page=${currentPage}`);
+	const { data: activities, isLoading } = useStravaAxios(`athlete/activities?page=${currentPage}`);
 
 	const observer = useRef();
 	const lastActivityRef = useCallback(node => {

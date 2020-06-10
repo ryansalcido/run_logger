@@ -11,7 +11,7 @@ import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import Grid from "@material-ui/core/Grid";
 import ActivityKudosView from "./ActivityKudosView";
 import ActivityCommentsView from "./ActivityCommentsView";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
@@ -35,17 +35,19 @@ const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 	const [ isDetailsPopupOpen, setIsDetailsPopupOpen ] = useState(false);
 
 	useEffect(() => {
-		let source = axios.CancelToken.source();
-		axios.get(`/strava/activities/${activity.id}/${activity.type}`, {cancelToken: source.token}).then(res => {
-			const { result } = res.data;
-			setData(result);
-			setIsDetailsPopupOpen(true);
-		}).catch(error => {
-			if(!axios.isCancel(error)) {
-				setData(null);
-				setIsDetailsPopupOpen(false);
-			}
-		});
+		let source = axiosInstance.CancelToken.source();
+		axiosInstance.get(`activities/${activity.id}/${activity.type}`, 
+			{cancelToken: source.token})
+			.then(res => {
+				const { result } = res.data;
+				setData(result);
+				setIsDetailsPopupOpen(true);
+			}).catch(error => {
+				if(!axiosInstance.isCancel(error)) {
+					setData(null);
+					setIsDetailsPopupOpen(false);
+				}
+			});
 		return () => source.cancel();
 	}, [activity.id, activity.type]);
 
