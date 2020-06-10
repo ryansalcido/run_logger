@@ -62,13 +62,13 @@ const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 				<DialogTitle disableTypography>
 					<Grid container justify="space-between" alignItems="center">
 						<Grid container item alignItems="center" xs={11}>
-							<Grid item xs={2}>
+							<Grid item xs={3} sm={2}>
 								{activity.avatar && 
 									<img src={activity.avatar} className={classes.profileAvatar} 
 										alt="Profile Avatar" height="50" width="50" />
 								}
 							</Grid>
-							<Grid item xs={8}>
+							<Grid item xs={7}>
 								<Typography variant="h6">{activity.name}</Typography>
 							</Grid>
 							<Grid item xs={1} className={classes.badgeItem}>
