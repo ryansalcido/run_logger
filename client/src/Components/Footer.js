@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PwrdByStrava from "../assets/images/PwrdByStrava.png";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	footer: {
 		minHeight: 30,
 		width: "100%",

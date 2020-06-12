@@ -1,12 +1,16 @@
-import React, { Fragment, useState, useRef, useCallback } from "react";
+import React, { Fragment, useState, useEffect, useContext, useRef, useCallback } from "react";
+import { StravaContext } from "../../Context/StravaContext";
 import Activity from "./Activity";
 import Typography from "@material-ui/core/Typography";
 import SkeletonLoading from "../common/SkeletonLoading";
 import { useStravaAxios } from "./useStravaAxios";
 
 const ActivityListView = () => {
+	const { activities, setActivities } = useContext(StravaContext);
 	const [ currentPage, setCurrentPage ] = useState(1);
-	const { data: activities, isLoading } = useStravaAxios(`athlete/activities?page=${currentPage}`);
+	const { data, isLoading } = useStravaAxios(`athlete/activities?page=${currentPage}`);
+
+	useEffect(() => setActivities(data), [data, setActivities]);
 
 	const observer = useRef();
 	const lastActivityRef = useCallback(node => {
