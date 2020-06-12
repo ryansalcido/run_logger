@@ -1,16 +1,15 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import StravaLoginButton from "../common/StravaLoginButton";
 import { StravaContext } from "../../Context/StravaContext";
 import AuthenticatedHeader from "./AuthenticatedHeader";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	appBar: {
 		minHeight: 40
 	},
@@ -32,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
 	gridItemButtons: {
 		display: "flex",
 		alignItems: "center"
+	},
+	runLoggerHomeLink: {
+		textDecoration: "none",
+		color: "white"
 	}
 }));
 
@@ -45,20 +48,14 @@ const Header = () => {
 			<Toolbar className={classes.toolbar}>
 				<Grid container justify="space-between" alignItems="center">
 					<Grid item>
-						<Typography variant="h5">RUN LOGGER</Typography>
+						<Typography className={classes.runLoggerHomeLink} variant="h5" component={Link} to={"/"}>
+							RUN LOGGER
+						</Typography>
 					</Grid>
 					<Grid item className={classes.gridItemButtons}>
 						{isAuthenticated 
 							? <AuthenticatedHeader />
-							: (
-								<Fragment>
-									<Button className={classes.headerButton} variant="outlined"
-										component={Link} to={"/"} >
-										home
-									</Button>
-									<StravaLoginButton height="40"/>
-								</Fragment>
-							)
+							: <StravaLoginButton height="40"/>
 						}
 					</Grid>				
 				</Grid>

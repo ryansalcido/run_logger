@@ -19,4 +19,13 @@ athleteRouter.get("/activities", isUserAuthenticated, (req, res) => {
 	});
 });
 
+athleteRouter.get("/:id/stats", isUserAuthenticated, (req, res) => {
+	const { id } = req.params;
+	stravaAxios(req.user, `/athletes/${id}/stats`).then(response => {
+		res.status(200).json({result: response});
+	}).catch(error => {
+		res.status(400).json(error);
+	});
+});
+
 module.exports = athleteRouter;

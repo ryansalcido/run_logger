@@ -15,7 +15,7 @@ import GoogleStaticMap from "./GoogleStaticMap";
 import { convertMetersToMiles, formatUTC, calculateMovingTime, 
 	calculateAveragePace, createRunStatColumn} from "./helpers";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	activityRoot: {
 		padding: theme.spacing(1)
 	},
@@ -64,7 +64,7 @@ const Activity = forwardRef(({ activity }, ref) => {
 				<ActivityDetailsPopup activity={selectedActivity} setSelectedActivity={setSelectedActivity} />
 			}
 			<Grid container>
-				<Grid item xs={12} sm={11} md={5}>
+				<Grid item xs={12}>
 					<Paper elevation={3} className={classes.activityCard}>
 						<Grid container item>
 							<Grid item xs={2} sm={2} md={3} lg={2}>

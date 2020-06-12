@@ -24,6 +24,7 @@ const StravaProvider = ({ children }) => {
 	const classes = useStyles();
 	const [ isLoaded, setIsLoaded ] = useState(false);
 	const [ profile, setProfile ] = useState(null);
+	const [ activities, setActivities ] = useState(null);
 	const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
 	useEffect(() => {
@@ -46,7 +47,7 @@ const StravaProvider = ({ children }) => {
 		<Fragment>
 			{isLoaded
 				? (
-					<StravaContext.Provider value={{profile, setProfile, isAuthenticated}}>
+					<StravaContext.Provider value={{profile, setProfile, activities, setActivities, isAuthenticated}}>
 						{ children }
 					</StravaContext.Provider>
 				)
