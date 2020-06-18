@@ -1,9 +1,10 @@
-import React, { Fragment, createContext, useState, useEffect } from "react";
+import React, { Fragment, createContext, useState, useEffect, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Loading from "../Components/common/Loading";
 import axiosInstance from "../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles(() => ({
 	loadingApp: {
@@ -43,11 +44,25 @@ const StravaProvider = ({ children }) => {
 		return () => source.cancel();
 	}, []);
 
+	const logout = useCallback(message => {
+		axiosInstance.get("auth/logout").then(res => {
+			const { isAuthenticated } = res.data;
+			setIsAuthenticated(isAuthenticated);
+			setProfile(null);
+			toast.info(message);
+		}).catch(() => {
+			setIsAuthenticated(false);
+			setProfile(null);
+			toast.info(message);
+		});
+	}, []);
+
 	return (
 		<Fragment>
 			{isLoaded
 				? (
-					<StravaContext.Provider value={{profile, setProfile, activities, setActivities, isAuthenticated}}>
+					<StravaContext.Provider 
+						value={{profile, setProfile, activities, setActivities, isAuthenticated, logout}}>
 						{ children }
 					</StravaContext.Provider>
 				)

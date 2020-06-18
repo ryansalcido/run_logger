@@ -31,14 +31,14 @@ export const calculateAveragePace = (seconds, meters) => {
 	return `${minutes}:${sec < 10 ? "0" + sec : sec}`;
 };
 
-export const createRunStatColumn = (columnName, value, conversionFunction) => {
+export const createRunStatColumn = (columnName, value, unitName, conversionFunction) => {
 	return (
 		<Grid item xs={3}>
 			<Grid item>
 				<Typography align="center">{columnName}</Typography>
 			</Grid>
 			<Grid item>
-				<Typography align="center">{conversionFunction(value)}</Typography>
+				<Typography align="center">{conversionFunction(value)}{unitName}</Typography>
 			</Grid>
 		</Grid>
 	);

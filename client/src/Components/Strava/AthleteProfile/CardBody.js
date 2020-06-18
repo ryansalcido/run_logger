@@ -27,18 +27,22 @@ const CardBody = ({ profile, stats }) => {
 		<Grid container item justify="center" className={classes.listStats}>
 			<Grid container item xs={4} alignItems="center" direction="column">
 				<Typography variant="body2">Following</Typography>
-				<Typography className={classes.bold} variant="body2">{profile.friend_count}</Typography>
+				<Typography className={classes.bold} variant="body2">
+					{profile.friend_count ? profile.friend_count : "N/A"}
+				</Typography>
 			</Grid>
 			<Grid container item xs={4} alignItems="center" direction="column">
 				<Typography variant="body2">Followers</Typography>
-				<Typography className={classes.bold} variant="body2">{profile.follower_count}</Typography>
+				<Typography className={classes.bold} variant="body2">
+					{profile.follower_count ? profile.follower_count : "N/A"}
+				</Typography>
 			</Grid>
-			{stats && <Grid container item xs={4} alignItems="center" direction="column">
+			<Grid container item xs={4} alignItems="center" direction="column">
 				<Typography variant="body2">Activities</Typography>
 				<Typography className={classes.bold} variant="body2">
-					{calculateTotalActivities(stats)}
+					{stats ? calculateTotalActivities(stats) : "N/A"}
 				</Typography>
-			</Grid>}
+			</Grid>
 		</Grid>
 	);
 };

@@ -10,7 +10,7 @@ import Dashboard from "./Components/Dashboard";
 import AuthenticatedRoute from "./hoc/AuthenticatedRoute";
 import UnauthenticatedRoute from "./hoc/UnauthenticatedRoute";
 
-function App() {
+const App = () => {
 	const themeConfig = createMuiTheme(theme);
 
 	return (
@@ -28,6 +28,6 @@ function App() {
 			</Router>
 		</ThemeProvider>
 	);
-}
+};
 
 export default App;

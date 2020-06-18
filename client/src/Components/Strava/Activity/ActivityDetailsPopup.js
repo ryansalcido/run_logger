@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -11,7 +11,8 @@ import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import Grid from "@material-ui/core/Grid";
 import ActivityKudosView from "./ActivityKudosView";
 import ActivityCommentsView from "./ActivityCommentsView";
-import axiosInstance from "../../utils/axiosInstance";
+import ErrorHandler from "../../common/ErrorHandler";
+import useStravaAxios from "../../../hooks/useStravaAxios";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
@@ -20,6 +21,10 @@ const useStyles = makeStyles(() => ({
 	},
 	badgeItem: {
 		paddingLeft: 8
+	},
+	errorText: {
+		padding: 8,
+		fontStyle: "italic"
 	}
 }));
 
@@ -31,34 +36,17 @@ const getCommentKudosCountByType = (activity) => {
 const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 	const classes = useStyles();
 
-	const [ data, setData ] = useState(null);
-	const [ isDetailsPopupOpen, setIsDetailsPopupOpen ] = useState(false);
-
-	useEffect(() => {
-		let source = axiosInstance.CancelToken.source();
-		axiosInstance.get(`activities/${activity.id}/${activity.type}`, 
-			{cancelToken: source.token})
-			.then(res => {
-				const { result } = res.data;
-				setData(result);
-				setIsDetailsPopupOpen(true);
-			}).catch(error => {
-				if(!axiosInstance.isCancel(error)) {
-					setData(null);
-					setIsDetailsPopupOpen(false);
-				}
-			});
-		return () => source.cancel();
-	}, [activity.id, activity.type]);
+	const { data, isLoading, error, setResult } = 
+		useStravaAxios(`activities/${activity.id}/${activity.type}`);
 
 	const handleClose = () => {
-		setIsDetailsPopupOpen(false);
+		setResult({data: null, isLoading: false, error: null});
 		setSelectedActivity(null);
 	};
 
 	return (
 		<Fragment>
-			{data && <Dialog disableScrollLock fullWidth open={isDetailsPopupOpen} onClose={handleClose}>
+			<Dialog disableScrollLock fullWidth open={!isLoading} onClose={handleClose}>
 				<DialogTitle disableTypography>
 					<Grid container justify="space-between" alignItems="center">
 						<Grid container item alignItems="center" xs={11}>
@@ -85,9 +73,10 @@ const ActivityDetailsPopup = ({ activity, setSelectedActivity }) => {
 						</Grid>
 					</Grid>
 				</DialogTitle>
+				{error && <ErrorHandler error={error} align="center" className={classes.errorText} />}
 				{activity.type === "kudos" && <ActivityKudosView kudos={data} />}
 				{activity.type === "comments" && <ActivityCommentsView comments={data} />}
-			</Dialog>}
+			</Dialog>
 		</Fragment>
 	);
 };

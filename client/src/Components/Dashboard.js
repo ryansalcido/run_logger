@@ -1,5 +1,5 @@
 import React from "react";
-import ActivityListView from "./Strava/ActivityListView";
+import ActivityListView from "./Strava/Activity/ActivityListView";
 import AthleteProfileCard from "./Strava/AthleteProfile/Card";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
@@ -8,7 +8,7 @@ const Dashboard = () => {
 	return (
 		<div style={{padding: 8}}>
 			<Grid container spacing={1}>
-				<Grid item xs={12} sm={10} md={5}>
+				<Grid item xs={12} sm={10} md={6} lg={5}>
 					<ActivityListView />
 				</Grid>
 				<Hidden smDown>
