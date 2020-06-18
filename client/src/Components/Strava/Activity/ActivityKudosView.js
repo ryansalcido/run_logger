@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
-import { createHexColorByString, getUserInitials } from "./helpers";
+import { createHexColorByString, getUserInitials } from "../helpers";
 
 const useStyles = makeStyles(() => ({
 	kudosList: {
@@ -49,13 +49,18 @@ const ActivityKudosView = ({ kudos }) => {
 							);
 						})
 					}
-				</List>}
+				</List>
+			}
 		</Fragment>
 	);
 };
 
 ActivityKudosView.propTypes = {
-	kudos: PropTypes.array.isRequired
+	kudos: PropTypes.array
+};
+
+ActivityKudosView.defaultProps = {
+	kudos: null
 };
 
 export default ActivityKudosView;

@@ -5,7 +5,7 @@ const { isUserAuthenticated } = require("../../middlewares/auth");
 activitiesRouter.get("/:id", isUserAuthenticated, (req, res) => {
 	const { id } = req.params;
 	stravaAxios(req.user, `/activities/${id}`).then(response => {
-		res.status(200).json({activity: response});
+		res.status(200).json({result: response});
 	}).catch(error => {
 		res.status(400).json(error);
 	});

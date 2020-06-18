@@ -10,13 +10,17 @@ const useStyles = makeStyles(theme => ({
 		fontWeight: "bold"
 	},
 	latestActivity: {
-		padding: `${theme.spacing(1)}px 0`,
+		padding: `${theme.spacing(1)}px 4px`,
+		margin: 0,
 		borderTop: "1px solid lightgray"
 	},
 	memberSince: {
 		padding: `${theme.spacing(1)}px 0 0`,
 		margin: `${theme.spacing(1)}px 0`,
 		borderTop: "1px solid lightgray"
+	},
+	noActivities: {
+		paddingLeft: 10
 	}
 }));
 
@@ -29,7 +33,7 @@ const CardFooter = ({ profile, activities }) => {
 				<Grid item>
 					<Typography variant="body2" className={classes.bold}>Latest Activity:</Typography>
 				</Grid>
-				{activities && activities.length > 0 && (
+				{activities && activities.length > 0 ? (
 					<Grid container item spacing={1}>
 						<Grid item>
 							<Typography variant="body2">{activities[0].name}</Typography>
@@ -41,7 +45,12 @@ const CardFooter = ({ profile, activities }) => {
 							</Typography>
 						</Grid>
 					</Grid>
-				)}
+				) : (
+					<Grid item className={classes.noActivities}>
+						<Typography variant="body2">Unable to retrieve activity details</Typography>
+					</Grid>
+				)
+				}
 			</Grid>
 			<Grid container item spacing={1} className={classes.memberSince}>
 				<Grid item>

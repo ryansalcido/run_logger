@@ -1,14 +1,15 @@
 import React, { Fragment, useState, useEffect, useContext, useRef, useCallback } from "react";
-import { StravaContext } from "../../Context/StravaContext";
+import { StravaContext } from "../../../Context/StravaContext";
 import Activity from "./Activity";
 import Typography from "@material-ui/core/Typography";
-import SkeletonLoading from "../common/SkeletonLoading";
-import { useStravaAxios } from "./useStravaAxios";
+import SkeletonLoading from "../../common/SkeletonLoading";
+import ErrorHandler from "../../common/ErrorHandler";
+import useStravaAxios from "../../../hooks/useStravaAxios";
 
 const ActivityListView = () => {
 	const { activities, setActivities } = useContext(StravaContext);
 	const [ currentPage, setCurrentPage ] = useState(1);
-	const { data, isLoading } = useStravaAxios(`athlete/activities?page=${currentPage}`);
+	const { data, isLoading, error } = useStravaAxios(`athlete/activities?page=${currentPage}`);
 
 	useEffect(() => setActivities(data), [data, setActivities]);
 
@@ -21,13 +22,14 @@ const ActivityListView = () => {
 				setCurrentPage(currentPage + 1);
 			}
 		});
-		if (observer.current && node) observer.current.observe(node);
+		if(observer.current && node) observer.current.observe(node);
 	}, [isLoading, currentPage]);
 
 	return (
 		<Fragment>
 			<Typography variant="h4" style={{padding: 8}}>Your Activities</Typography>
-			{activities && 
+			{error && <ErrorHandler error={error} />}
+			{activities &&
 				activities.map((activity, idx) => {
 					return (
 						<Activity key={activity.id} activity={activity} 

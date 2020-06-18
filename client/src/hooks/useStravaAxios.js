@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 
-export const useStravaAxios = (url) => {
+const useStravaAxios = (url) => {
 	const [ result, setResult ] = useState({data: null, error: null, isLoading: false});
 
 	useEffect(() => {
-		setResult(result => ({ ...result, isLoading: true }));
+		setResult(result => ({ ...result, isLoading: true}));
 		let source = axiosInstance.CancelToken.source();
 		axiosInstance.get(url, {cancelToken: source.token}).then(res => {
 			const { result } = res.data;
@@ -23,5 +23,7 @@ export const useStravaAxios = (url) => {
 		return () => source.cancel();
 	}, [url]);
 
-	return result;
+	return { ...result, setResult };
 };
+
+export default useStravaAxios;

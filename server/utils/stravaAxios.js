@@ -1,6 +1,9 @@
 const axios = require("axios");
 const stravaBaseUrl = "https://www.strava.com/api/v3";
-const defaultErrorMsg = {message: "Error retrieving data from Strava", errors: [{code: "invalid", field: "unknown", resource: "resource"}]};
+const defaultErrorMsg = {
+	message: "Error retrieving data from Strava",
+	errors: [{code: "invalid", field: "unknown", resource: "resource"}]
+};
 
 function stravaAxios(user, url) {
 	return new Promise((resolve, reject) => {

@@ -17,6 +17,7 @@ authRouter.get("/callback", (req, res, next) => {
 	passport.authenticate("strava", (err, user) => {
 		if(err) return res.redirect(CLIENT_REDIRECT_URL);
 		if(!user) return res.redirect(CLIENT_REDIRECT_URL);
+		user.scope = req.query && req.query.scope;
 		req.login(user, (error) => {
 			if(error) return res.redirect(CLIENT_REDIRECT_URL);
 			return res.redirect(CLIENT_REDIRECT_URL);
@@ -28,6 +29,12 @@ authRouter.get("/isAuthenticated", (req, res) => {
 	return req.isAuthenticated()
 		? res.status(200).json({isAuthenticated: true})
 		: res.status(401).json({isAuthenticated: false});
+});
+
+authRouter.get("/logout", (req, res) => {
+	req.logout();
+	req.session = null;
+	return res.status(200).json({message: "Successfully logged out", isAuthenticated: false});
 });
 
 module.exports = authRouter;

@@ -8,7 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import { createHexColorByString, getUserInitials, formatUTC } from "./helpers";
+import { createHexColorByString, getUserInitials, formatUTC } from "../helpers";
 import moment from "moment";
 
 const useStyles = makeStyles(() => ({
@@ -42,7 +42,9 @@ const ActivityCommentsView = ({ comments }) => {
 			{comments &&
 				<List className={classes.commentsList}>
 					{comments.length === 0 
-						? <Typography align="center" className={classes.noCommentsText}>This entry has no comments yet.</Typography>
+						? <Typography align="center" className={classes.noCommentsText}>
+							This entry has no comments yet.
+						</Typography>
 						: comments.map(comment => {
 							return (
 								<Grid container key={comment.id} alignItems="center" className={classes.commentContainer}>
@@ -59,7 +61,9 @@ const ActivityCommentsView = ({ comments }) => {
 											</ListItemAvatar>
 											<Grid container direction="column">
 												<Grid container item justify="space-between">
-													<Typography variant="body2">{`${comment.athlete.firstname} ${comment.athlete.lastname}`}</Typography>
+													<Typography variant="body2">
+														{`${comment.athlete.firstname} ${comment.athlete.lastname}`}
+													</Typography>
 													<Typography variant="body2">{calculateDate(comment.created_at)}</Typography>
 												</Grid>
 												<Grid item>
@@ -78,7 +82,11 @@ const ActivityCommentsView = ({ comments }) => {
 };
 
 ActivityCommentsView.propTypes = {
-	comments: PropTypes.array.isRequired
+	comments: PropTypes.array
+};
+
+ActivityCommentsView.defaultProps = {
+	comments: null
 };
 
 export default ActivityCommentsView;

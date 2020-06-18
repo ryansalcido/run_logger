@@ -1,19 +1,19 @@
 import React, { useState, useContext, forwardRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { StravaContext } from "../../Context/StravaContext";
+import { StravaContext } from "../../../Context/StravaContext";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Run from "../../assets/images/Run.png";
+import Run from "../../../assets/images/Run.png";
 import CommentOutlinedIcon from "@material-ui/icons/CommentOutlined";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import ActivityDetailsPopup from "./ActivityDetailsPopup";
-import GoogleStaticMap from "./GoogleStaticMap";
+import GoogleStaticMap from "../GoogleStaticMap";
 import { convertMetersToMiles, formatUTC, calculateMovingTime, 
-	calculateAveragePace, createRunStatColumn} from "./helpers";
+	calculateAveragePace, createRunStatColumn} from "../helpers";
 
 const useStyles = makeStyles(theme => ({
 	activityRoot: {
@@ -89,14 +89,14 @@ const Activity = forwardRef(({ activity }, ref) => {
 									<Typography variant="body1" className={classes.bold}>{activity.name}</Typography>
 								</Grid>
 								<Grid container item>
-									{createRunStatColumn("Distance", activity.distance, convertMetersToMiles)}
-									{createRunStatColumn("Time", activity.moving_time, calculateMovingTime)}
+									{createRunStatColumn("Distance", activity.distance, "mi", convertMetersToMiles)}
+									{createRunStatColumn("Time", activity.moving_time, "s", calculateMovingTime)}
 									<Grid item xs={4}>
 										<Grid item>
 											<Typography align="center">Avg. Pace</Typography>
 										</Grid>
 										<Grid item>
-											<Typography align="center">{calculateAveragePace(activity.moving_time, activity.distance)}</Typography>
+											<Typography align="center">{calculateAveragePace(activity.moving_time, activity.distance)}/mi</Typography>
 										</Grid>
 									</Grid>
 								</Grid>								
