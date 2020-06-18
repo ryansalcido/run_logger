@@ -10,13 +10,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const SkeletonLoading = ({ height }) => {
+const SkeletonLoading = ({ numPlaceholders, height }) => {
 	const classes = useStyles();
 
 	return (
 		<div className={classes.skeletonLoadingRoot}>
 			<Grid container direction="column" spacing={3}>
-				{[0, 1, 2, 3].map(idx => {
+				{[...Array(numPlaceholders).keys()].map(idx => {
 					return (
 						<Grid item key={idx}>
 							<Skeleton variant="rect" height={height} />
@@ -29,7 +29,13 @@ const SkeletonLoading = ({ height }) => {
 };
 
 SkeletonLoading.propTypes = {
+	numPlaceholders: PropTypes.number,
 	height: PropTypes.number
+};
+
+SkeletonLoading.defaultProps = {
+	numPlaceholders: 1,
+	height: 50
 };
 
 export default SkeletonLoading;

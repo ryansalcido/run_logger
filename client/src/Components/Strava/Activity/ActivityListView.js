@@ -37,7 +37,7 @@ const ActivityListView = () => {
 					);
 				})
 			}
-			{isLoading && <SkeletonLoading height={175} />}
+			{isLoading && <SkeletonLoading numPlaceholders={4} height={175} />}
 		</Fragment>
 	);
 };
