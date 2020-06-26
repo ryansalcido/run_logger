@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const SECONDS_IN_HOUR = 3600;
 const SECONDS_IN_MINUTE = 60;
-const MILES_IN_KILOMETERS = 1.609344;
+const KILOMETERS_IN_MILE = 1.609344;
 
 const useStyles = makeStyles(theme => ({
 	PaceCalculatorRoot: {
@@ -52,11 +52,11 @@ const formatSecondsToStandardTime = (seconds) => {
 };
 
 const kilometersToMiles = (kilometers) => {
-	return Number(kilometers) / MILES_IN_KILOMETERS;
+	return Number(kilometers) / KILOMETERS_IN_MILE;
 };
 
 const milesToKilometers = (miles) => {
-	return Number(miles) * MILES_IN_KILOMETERS;
+	return Number(miles) * KILOMETERS_IN_MILE;
 };
 
 const convertDistance = (distance, from, to) => {
