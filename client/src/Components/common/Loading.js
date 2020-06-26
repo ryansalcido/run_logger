@@ -4,8 +4,20 @@ import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
+	"@keyframes blink": {
+		"0%": {
+			opacity: 0.1
+		},
+		"20%": {
+			opacity: 1
+		},
+		"100%": {
+			opacity: 0.1
+		}
+	},
 	loadingContainer: {
 		"& svg": {
+			color: "#AD2323",
 			animation: "$blink 1.5s both infinite",
 			"&:nth-child(2)": {
 				animationDelay: "0.5s"
@@ -13,17 +25,6 @@ const useStyles = makeStyles(() => ({
 			"&:nth-child(3)": {
 				animationDelay: "1s"
 			}
-		}
-	},
-	"@keyframes blink": {
-		"0%": {
-			color: "white"
-		},
-		"20%": {
-			color: "#AD2323"
-		},
-		"100%": {
-			color: "white"
 		}
 	}
 }));

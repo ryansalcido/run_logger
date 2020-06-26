@@ -50,7 +50,7 @@ const Home = () => {
 
 	const createPaceCalculatorButton = () => {
 		return (
-			<Button variant="contained" color="secondary" className={classes.paceCalculatorButton}
+			<Button variant="contained" className={classes.paceCalculatorButton}
 				onClick={() => history.push("/pace-calculator")}>
 				pace calculator
 			</Button>
