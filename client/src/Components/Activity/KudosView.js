@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
-import { createHexColorByString, getUserInitials } from "../helpers";
+import { createHexColorByString, getUserInitials } from "../../utils/helpers";
 
 const useStyles = makeStyles(() => ({
 	kudosList: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const ActivityKudosView = ({ kudos }) => {
+const KudosView = ({ kudos }) => {
 	const classes = useStyles();
 
 	return (
@@ -55,12 +55,12 @@ const ActivityKudosView = ({ kudos }) => {
 	);
 };
 
-ActivityKudosView.propTypes = {
+KudosView.propTypes = {
 	kudos: PropTypes.array
 };
 
-ActivityKudosView.defaultProps = {
+KudosView.defaultProps = {
 	kudos: null
 };
 
-export default ActivityKudosView;
+export default KudosView;

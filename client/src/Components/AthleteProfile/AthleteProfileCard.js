@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { StravaContext } from "../../../Context/StravaContext";
+import { StravaContext } from "../../Context/StravaContext";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
-import SkeletonLoading from "../../common/SkeletonLoading";
-import useStravaAxios from "../../../hooks/useStravaAxios";
+import SkeletonLoading from "../common/SkeletonLoading";
+import useStravaAxios from "../../hooks/useStravaAxios";
 
 const useStyles = makeStyles(theme => ({
 	profileRoot: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const Card = () => {
+const AthleteProfileCard = () => {
 	const classes = useStyles();
 	const { profile, activities } = useContext(StravaContext);
 	const { data: stats, isLoading } = useStravaAxios(`athlete/${profile.id}/stats`);
@@ -49,4 +49,4 @@ const Card = () => {
 	);
 };
 
-export default Card;
+export default AthleteProfileCard;

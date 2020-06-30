@@ -11,8 +11,11 @@ function stravaAxios(user, url) {
 			.then(response => {
 				resolve(response.data);
 			}).catch(error => {
-				const { data } = error && error.response;
-				data ? reject(data) : reject(defaultErrorMsg);
+				if(error && error.response) {
+					const { data } = error.response;
+					data ? reject(data) : reject(defaultErrorMsg);
+				}
+				reject(defaultErrorMsg);
 			});
 	});
 }
