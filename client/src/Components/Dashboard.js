@@ -1,6 +1,6 @@
 import React from "react";
-import ActivityListView from "./Strava/Activity/ActivityListView";
-import AthleteProfileCard from "./Strava/AthleteProfile/Card";
+import ActivityListView from "./Activity/ActivityListView";
+import AthleteProfileCard from "./AthleteProfile/AthleteProfileCard";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 

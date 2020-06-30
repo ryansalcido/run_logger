@@ -8,7 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import { createHexColorByString, getUserInitials, formatUTC } from "../helpers";
+import { createHexColorByString, getUserInitials, formatUTC } from "../../utils/helpers";
 import moment from "moment";
 
 const useStyles = makeStyles(() => ({
@@ -34,7 +34,7 @@ const calculateDate = (utc) => {
 	return differenceNumHours <= 24 ? `${differenceNumHours} hours ago` : formatUTC(utc, "MM/DD/YYYY");
 };
 
-const ActivityCommentsView = ({ comments }) => {
+const CommentsView = ({ comments }) => {
 	const classes = useStyles();
 
 	return (
@@ -81,12 +81,12 @@ const ActivityCommentsView = ({ comments }) => {
 	);
 };
 
-ActivityCommentsView.propTypes = {
+CommentsView.propTypes = {
 	comments: PropTypes.array
 };
 
-ActivityCommentsView.defaultProps = {
+CommentsView.defaultProps = {
 	comments: null
 };
 
-export default ActivityCommentsView;
+export default CommentsView;

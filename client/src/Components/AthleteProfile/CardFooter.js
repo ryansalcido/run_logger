@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { formatUTC } from "../helpers";
+import { formatUTC } from "../../utils/helpers";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({

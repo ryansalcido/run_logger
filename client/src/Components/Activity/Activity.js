@@ -1,19 +1,19 @@
 import React, { useState, useContext, forwardRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { StravaContext } from "../../../Context/StravaContext";
+import { StravaContext } from "../../Context/StravaContext";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Run from "../../../assets/images/Run.png";
+import Run from "../../assets/images/Run.png";
 import CommentOutlinedIcon from "@material-ui/icons/CommentOutlined";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import ActivityDetailsPopup from "./ActivityDetailsPopup";
-import GoogleStaticMap from "../GoogleStaticMap";
+import KudosCommentsDialog from "./KudosCommentsDialog";
+import LeafletMap from "./LeafletMap";
 import { convertMetersToMiles, formatUTC, calculateMovingTime, 
-	calculateAveragePace, createRunStatColumn} from "../helpers";
+	calculateAveragePace, createRunStatColumn} from "../../utils/helpers";
 
 const useStyles = makeStyles(theme => ({
 	activityRoot: {
@@ -30,8 +30,8 @@ const useStyles = makeStyles(theme => ({
 	activityImageItem: {
 		width: 60
 	},
-	googleMapsItem: {
-		height: "100%",
+	leafletMap: {
+		height: 250,
 		width: "100%"
 	},
 	bold: {
@@ -43,6 +43,12 @@ const useStyles = makeStyles(theme => ({
 	divider: {
 		width: "100%",
 		backgroundColor: "lightgray"
+	},
+	activityTitle: {
+		fontWeight: "bold",
+		wordBreak: "break-word",
+		//Fix IE11 error as "break-word" value does not work with "word-break" property
+		wordWrap: "break-word"
 	}
 }));
 
@@ -61,7 +67,7 @@ const Activity = forwardRef(({ activity }, ref) => {
 	return (
 		<div ref={ref} className={classes.activityRoot}>
 			{selectedActivity &&
-				<ActivityDetailsPopup activity={selectedActivity} setSelectedActivity={setSelectedActivity} />
+				<KudosCommentsDialog activity={selectedActivity} setSelectedActivity={setSelectedActivity} />
 			}
 			<Grid container>
 				<Grid item xs={12}>
@@ -86,7 +92,7 @@ const Activity = forwardRef(({ activity }, ref) => {
 							</Grid>
 							<Grid container item direction="column" xs={10} sm={10} md={9} lg={10}>
 								<Grid item>
-									<Typography variant="body1" className={classes.bold}>{activity.name}</Typography>
+									<Typography variant="body1" className={classes.activityTitle}>{activity.name}</Typography>
 								</Grid>
 								<Grid container item>
 									{createRunStatColumn("Distance", activity.distance, "mi", convertMetersToMiles)}
@@ -101,8 +107,9 @@ const Activity = forwardRef(({ activity }, ref) => {
 									</Grid>
 								</Grid>								
 							</Grid>
-							<Grid item className={classes.googleMapsItem}>
-								<GoogleStaticMap polyline={activity.map.summary_polyline} />
+							<Grid item className={classes.leafletMap}>
+								<LeafletMap polyline={activity.map.summary_polyline}
+									mapProps={{dragging: false, zoom: false, doubleClickZoom: false, scrollWheelZoom: false, zoomControl: false, touchZoom: false}} />
 							</Grid>
 							<Grid container item justify="space-between">
 								<Divider className={classes.divider} />
