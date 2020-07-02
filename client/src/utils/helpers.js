@@ -3,6 +3,8 @@ import moment from "moment";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+const FEET_IN_METER = 3.281;
+
 export const formatUTC = (utc, format) => {
 	return moment.utc(utc).format(format);
 };
@@ -61,4 +63,8 @@ export const createHexColorByString = (string) => {
 		color += ("00" + value.toString(16)).substr(-2);
 	}
 	return color;
+};
+
+export const convertMetersToFeet = (meters, round) => {
+	return round ? Math.round(meters * FEET_IN_METER) : meters * FEET_IN_METER;
 };

@@ -7,6 +7,7 @@ import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
 import Dashboard from "./Components/Dashboard";
+import ActivityOverview from "./Components/ActivityOverview/ActivityOverview";
 import PaceCalculator from "./Components/PaceCalculator/PaceCalculator";
 import AuthenticatedRoute from "./hoc/AuthenticatedRoute";
 
@@ -22,6 +23,7 @@ const App = () => {
 					<Switch>
 						<Route exact path="/" component={Home} />
 						<AuthenticatedRoute exact path="/dashboard" component={Dashboard} />
+						<AuthenticatedRoute exact path="/activities/:activityId" component={ActivityOverview} />
 						<Route exact path="/pace-calculator" component={PaceCalculator} />
 					</Switch>
 				</div>

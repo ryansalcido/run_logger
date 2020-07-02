@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
 
-const useStravaAxios = (url) => {
+const useAxios = (url) => {
 	const [ result, setResult ] = useState({data: null, error: null, isLoading: false});
 
 	useEffect(() => {
@@ -26,4 +26,4 @@ const useStravaAxios = (url) => {
 	return { ...result, setResult };
 };
 
-export default useStravaAxios;
+export default useAxios;

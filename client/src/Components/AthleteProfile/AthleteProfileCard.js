@@ -7,7 +7,7 @@ import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
 import SkeletonLoading from "../common/SkeletonLoading";
-import useStravaAxios from "../../hooks/useStravaAxios";
+import useAxios from "../../hooks/useAxios";
 
 const useStyles = makeStyles(theme => ({
 	profileRoot: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 const AthleteProfileCard = () => {
 	const classes = useStyles();
 	const { profile, activities } = useContext(StravaContext);
-	const { data: stats, isLoading } = useStravaAxios(`athlete/${profile.id}/stats`);
+	const { data: stats, isLoading } = useAxios(`athlete/${profile.id}/stats`);
 
 	return (
 		<div className={classes.profileRoot}>

@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import KudosCommentsDialog from "./KudosCommentsDialog";
 import LeafletMap from "./LeafletMap";
+import { useHistory } from "react-router-dom";
 import { convertMetersToMiles, formatUTC, calculateMovingTime, 
 	calculateAveragePace, createRunStatColumn} from "../../utils/helpers";
 
@@ -54,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 const Activity = forwardRef(({ activity }, ref) => {
 	const classes = useStyles();
+	const history = useHistory();
 	const { profile } = useContext(StravaContext);
 	const [ selectedActivity, setSelectedActivity ] = useState(null);
 
@@ -92,7 +94,9 @@ const Activity = forwardRef(({ activity }, ref) => {
 							</Grid>
 							<Grid container item direction="column" xs={10} sm={10} md={9} lg={10}>
 								<Grid item>
-									<Typography variant="body1" className={classes.activityTitle}>{activity.name}</Typography>
+									<Typography variant="body1" className={classes.activityTitle} onClick={() => history.push(`/activities/${activity.id}`)}>
+										{activity.name}
+									</Typography>
 								</Grid>
 								<Grid container item>
 									{createRunStatColumn("Distance", activity.distance, "mi", convertMetersToMiles)}

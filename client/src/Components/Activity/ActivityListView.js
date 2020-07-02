@@ -4,12 +4,12 @@ import Activity from "./Activity";
 import Typography from "@material-ui/core/Typography";
 import SkeletonLoading from "../common/SkeletonLoading";
 import ErrorHandler from "../common/ErrorHandler";
-import useStravaAxios from "../../hooks/useStravaAxios";
+import useAxios from "../../hooks/useAxios";
 
 const ActivityListView = () => {
 	const { activities, setActivities } = useContext(StravaContext);
 	const [ currentPage, setCurrentPage ] = useState(1);
-	const { data, isLoading, error } = useStravaAxios(`athlete/activities?page=${currentPage}`);
+	const { data, isLoading, error } = useAxios(`athlete/activities?page=${currentPage}`);
 
 	useEffect(() => setActivities(data), [data, setActivities]);
 

@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import KudosView from "./KudosView";
 import CommentsView from "./CommentsView";
 import ErrorHandler from "../common/ErrorHandler";
-import useStravaAxios from "../../hooks/useStravaAxios";
+import useAxios from "../../hooks/useAxios";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
@@ -37,7 +37,7 @@ const KudosCommentsDialog = ({ activity, setSelectedActivity }) => {
 	const classes = useStyles();
 
 	const { data, isLoading, error, setResult } = 
-		useStravaAxios(`activities/${activity.id}/${activity.type}`);
+		useAxios(`activities/${activity.id}/${activity.type}`);
 
 	const handleClose = () => {
 		setResult({data: null, isLoading: false, error: null});
