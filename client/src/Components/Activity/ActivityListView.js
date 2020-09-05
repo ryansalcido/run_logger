@@ -32,8 +32,11 @@ const ActivityListView = () => {
 			{activities &&
 				activities.map((activity, idx) => {
 					return (
-						<Activity key={activity.id} activity={activity} 
-							ref={activities.length === idx + 1 ? lastActivityRef : null}/>
+						<Fragment key={activity.id}>
+							{activity.type === "Run" && 
+								<Activity activity={activity} ref={activities.length === idx + 1 ? lastActivityRef : null}/>
+							}
+						</Fragment>
 					);
 				})
 			}
