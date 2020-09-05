@@ -11,11 +11,11 @@ const Dashboard = () => {
 				<Grid item xs={12} sm={10} md={6} lg={5}>
 					<ActivityListView />
 				</Grid>
-				<Hidden smDown>
+				{/* <Hidden smDown>
 					<Grid item xs={12} md={5} lg={4}>
 						<AthleteProfileCard />
 					</Grid>
-				</Hidden>
+				</Hidden> */}
 			</Grid>
 		</div>
 	);

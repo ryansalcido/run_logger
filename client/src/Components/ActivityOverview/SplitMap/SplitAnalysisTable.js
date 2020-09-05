@@ -17,7 +17,11 @@ const ZERO_MILES = 0;
 
 const useStyles = makeStyles(() => ({
 	splitTableContainer: {
-		maxHeight: 300
+		height: 274
+	},
+	splitTableHeader: {
+		paddingBottom: 16,
+		borderBottom: "1px solid rgba(81, 81, 81, 1)"
 	}
 }));
 
@@ -34,9 +38,9 @@ const SplitAnalysisTable = ({ splits }) => {
 	const classes = useStyles();
 
 	return (
-		<Fragment>
-			<Typography variant="h5" align="center">Splits</Typography>
-			<TableContainer component={Paper} className={classes.splitTableContainer}>
+		<Paper elevation={3}>
+			<Typography variant="h4" align="center" className={classes.splitTableHeader}>Splits</Typography>
+			<TableContainer className={classes.splitTableContainer}>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
@@ -63,7 +67,7 @@ const SplitAnalysisTable = ({ splits }) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</Fragment>
+		</Paper>
 	);
 };
 
