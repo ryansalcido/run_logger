@@ -21,7 +21,7 @@ pace calculator which computes pace, time, and distance when given two of the va
 # 3<sup>rd</sup> Party API Acknowledgements
 
 - [Strava](https://developers.strava.com/docs/reference/)
-- [Google Maps](https://developers.google.com/maps/documentation/maps-static/intro)
+- [OpenStreetMap](https://www.openstreetmap.org/about)
 
 
 # Supported Browsers
