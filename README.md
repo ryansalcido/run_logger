@@ -1,6 +1,6 @@
 # Run Logger
 
-https://rmsdevelopmentprojects.com/run-logger
+https://ryansalcido.com/run-logger
 
 A web application used to:
 - view your Strava profile and running activities at a glance
