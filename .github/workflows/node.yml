@@ -39,3 +39,20 @@ jobs:
         cd server/
         npm install
         ls -la
+
+    - name: Deploy to Production
+      uses: easingthemes/ssh-deploy@2.1.6
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+        REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+        SOURCE: "server/"
+        TARGET: ${{ secrets.DEPLOY_TARGET }}
+
+    - name: SSH
+      uses: appleboy/ssh-action@0.1.4
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        script: ls -la projects/test_github_actions
