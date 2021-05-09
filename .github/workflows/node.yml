@@ -50,7 +50,7 @@ jobs:
         TARGET: ${{ secrets.DEPLOY_TARGET }}
 
     - name: SSH
-      uses: appleboy/ssh-action@0.1.4
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ${{ secrets.DEPLOY_USER }}
