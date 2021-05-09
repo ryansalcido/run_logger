@@ -41,7 +41,7 @@ jobs:
         ls -la
 
     - name: Deploy to Production
-      uses: easingthemes/ssh-deploy@2.1.6
+      uses: easingthemes/ssh-deploy@2.1.5
       env:
         SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
         REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
