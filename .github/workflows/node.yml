@@ -30,8 +30,8 @@ jobs:
 
     - name: Add environment configuration
       run: |
-        echo '${{ secrets.REACT_ENV_FILE }}' | base64 -d > client/.env
-        echo '${{ secrets.NODE_ENV_FILE }}' | base64 -d > server/.env
+        echo '${{ secrets.REACT_ENV_FILE }}' > client/.env
+        echo '${{ secrets.NODE_ENV_FILE }}' > server/.env
 
     - name: Build client
       run: |
