@@ -28,6 +28,11 @@ jobs:
         cd client/
         npm install
 
+    - name: Add environment configuration
+      run: |
+        echo ${{ secrets.REACT_ENV_FILE }} > client/.env
+        echo ${{ secrets.NODE_ENV_FILE }} > server/.env
+
     - name: Build client
       run: |
         cd client/
@@ -55,4 +60,6 @@ jobs:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
-        script: ls -la projects/test_github_actions
+        script: |
+          ls -la projects/test_github_actions
+          echo $NODE_ENV
