@@ -8,7 +8,7 @@ A web application used to:
 
 Built with React, Express.js, Node.js, Material UI, Strava Passport, and Babel.
 
-Deployed on DigitalOcean with NGINX and PM2.
+Deployed on DigitalOcean using NGINX and PM2.
 
 
 # Goal
