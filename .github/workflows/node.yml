@@ -61,5 +61,7 @@ jobs:
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         script: |
-          ls -la projects/test_github_actions
-          echo $NODE_ENV
+          cd ${{ secrets.DEPLOY_TARGET }}
+          pm2 stop --silent run_logger
+          pm2 delete --silent run_logger
+          pm2 start index.js --name run_logger
