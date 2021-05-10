@@ -1,5 +1,7 @@
 # Run Logger
 
+![example workflow](https://github.com/ryansalcido/run_logger/actions/workflows/deploy-production.yml/badge.svg)
+
 https://ryansalcido.com/run-logger
 
 A web application used to:
